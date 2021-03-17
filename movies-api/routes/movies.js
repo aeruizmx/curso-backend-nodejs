@@ -64,7 +64,7 @@ function moviesApi(app){
   router.delete('/:movieId', async function(req, res, next){
     const { movieId } = req.params;
     try {
-      const deletedMovieId = await movieServices .deleteMovie({ movieId })
+      const deletedMovieId = await movieServices.deleteMovie({ movieId })
       res.status(200).json({
         data: deletedMovieId,
         message: 'Movie deleted!'
@@ -73,6 +73,22 @@ function moviesApi(app){
       next(error)
     }
   });
+
+  router.patch("/:movieId", async function(req,res,next) {
+		const {movieId} = req.params;
+		const {body: movie} = req;		
+		try {
+			const updatedMovieId = await movieServices.partialUpdateMovie({movieId,movie});
+
+			res.status(200).json({
+				data:updatedMovieId,
+				message: "movie updated partially"
+			});
+		}
+		catch(error) {
+			next(error);
+		}
+	});
 }
 
 module.exports = moviesApi;

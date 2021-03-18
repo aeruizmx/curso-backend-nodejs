@@ -49,7 +49,7 @@ class MongoLib {
 
   update(collection, id, data){
     return this.connect().then(db =>{
-      return db.collection(collection).updatetOne({_id: ObjectId(id)}, { $set: data}, { upsert: true});
+      return db.collection(collection).updateOne({_id: ObjectId(id)}, { $set: data}, { upsert: true});
     }).then(result => result.upsertedId || id);
   }
 

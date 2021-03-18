@@ -2,6 +2,9 @@ const express = require('express');
 const app = express();
 const { config } = require('./config/index');
 const moviesApi = require('./routes/movies');
+
+//Body parser
+app.use(express.json());
 moviesApi(app);
 // app.get('/', function(req, res) {
 //   res.send('hello world hello')

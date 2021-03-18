@@ -3,15 +3,21 @@ const app = express();
 const { config } = require('./config/index');
 const moviesApi = require('./routes/movies');
 
-const { logErrors, errorHandler } = require('./utils/middleware/errorHandlers');
-
+const { logErrors, errorHandler, wrapErrors } = require('./utils/middleware/errorHandlers');
+const notFoundHandler = require('./utils/middleware/notFoundHandler');
 //Body parser
 app.use(express.json());
 
+// Routes
 moviesApi(app);
+// Catch 404 error
 
+app.use(notFoundHandler);
+// Manejadores de errores
 app.use(logErrors);
+app.use(wrapErrors);
 app.use(errorHandler);
+
 // app.get('/', function(req, res) {
 //   res.send('hello world hello')
 // })

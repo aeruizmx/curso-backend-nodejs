@@ -3,9 +3,15 @@ const app = express();
 const { config } = require('./config/index');
 const moviesApi = require('./routes/movies');
 
+const { logErrors, errorHandler } = require('./utils/middleware/errorHandlers');
+
 //Body parser
 app.use(express.json());
+
 moviesApi(app);
+
+app.use(logErrors);
+app.use(errorHandler);
 // app.get('/', function(req, res) {
 //   res.send('hello world hello')
 // })
@@ -23,5 +29,5 @@ moviesApi(app);
 
 //})
 app.listen(config.port, function(){
-  console.log(`Listening http://localhost:${config.port}`);
+  console.log(`Listening http://localhost:${config.port}`); //eslint-disable-line
 })
